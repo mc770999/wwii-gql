@@ -9,4 +9,5 @@ class TargetType(Base):
     target_type_id = Column(Integer, primary_key=True, autoincrement=True)
     target_type_name = Column(String)
 
+
     target = relationship("Target", back_populates="target_type")
