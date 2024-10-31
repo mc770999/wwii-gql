@@ -20,6 +20,7 @@ class MissionType(ObjectType):
 
     targets = List('app.gql.types.target_type.TargetType')
 
+
     @staticmethod
     def resolve_targets(root, info):
         return missions_repository.get_targets_by_mission_id(root.mission_id)
