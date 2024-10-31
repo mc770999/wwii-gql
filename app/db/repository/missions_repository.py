@@ -78,6 +78,7 @@ def get_mission_by_target_industry(target_type_name):
         )
         return all_missions
 
+
 def get_targets_by_mission_id(mission_id: int):
     with session_maker() as session:
         return session.query(Target).filter(Target.mission_id == mission_id).all()
