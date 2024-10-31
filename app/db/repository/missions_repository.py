@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 from sqlalchemy.testing.config import options
 from app.db.models import Mission, Target, City, Country, TargetType  # Import the models
@@ -84,4 +85,38 @@ def get_targets_by_mission_id(mission_id: int):
         return session.query(Target).filter(Target.mission_id == mission_id).all()
 
 
+def add_mission(mission):
+    with session_maker() as session:
+        id_m = session.query(func.max(Mission.mission_id)).scalar() + 1
+        mission.mission_id = id_m
+        session.add(mission)
+        session.commit()
+        session.refresh(mission)
+    return mission
 
+
+def add_target_to_mission(target_data):
+    new_target = Target(**target_data)
+    with session_maker() as session:
+        session.add(new_target)
+        session.commit()
+    return new_target
+
+
+def update_mission_result(mission_id ,mission):
+    with session_maker() as session:
+        the_target = session.query(Mission).filter(Mission.mission_id == mission_id).first()
+        if the_target:
+            for k, v in mission.items():
+                setattr(the_target, k, v)
+            session.commit()
+            session.refresh(the_target)
+            return the_target
+        else:
+            return None
+
+def delete_mission(mission_id):
+    with session_maker() as session:
+        mission = session.query(Mission).filter(Mission.mission_id == mission_id).first()
+        session.delete(mission)
+        session.commit()

@@ -7,14 +7,14 @@ from app.db.database import Base
 class Mission(Base):
     __tablename__ = "missions"
     mission_id = Column(Integer, primary_key=True, autoincrement=True)
-    mission_date = Column(Date)
-    airborne_aircraft = Column(Float)
-    attacking_aircraft = Column(Float)
-    bombing_aircraft = Column(Float)
-    aircraft_returned = Column(Float)
-    aircraft_failed = Column(Float)
-    aircraft_damaged = Column(Float)
-    aircraft_lost = Column(Float)
+    mission_date = Column(Date, nullable=True)
+    airborne_aircraft = Column(Float, nullable=True)
+    attacking_aircraft = Column(Float, nullable=True)
+    bombing_aircraft = Column(Float, nullable=True)
+    aircraft_returned = Column(Float, nullable=True)
+    aircraft_failed = Column(Float, nullable=True)
+    aircraft_damaged = Column(Float, nullable=True)
+    aircraft_lost = Column(Float, nullable=True)
 
 
-    target = relationship("Target", back_populates="mission")
+    target = relationship("Target", back_populates="mission", cascade="all, delete-orphan")
