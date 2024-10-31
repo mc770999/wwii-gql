@@ -8,6 +8,7 @@ def get_country_by_id(country_id: int):
 
 
 
+
 def get_cities_by_country_id(country_id: int):
     with session_maker() as session:
         return session.query(City).filter(City.country_id == country_id).all()
