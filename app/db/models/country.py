@@ -9,4 +9,5 @@ class Country(Base):
     country_id = Column(Integer, primary_key=True, autoincrement=True)
     country_name = Column(String)
 
+
     city = relationship("City", back_populates="country")
